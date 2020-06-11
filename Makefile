@@ -167,5 +167,6 @@ ifeq (, $(shell which python3))
 endif
 SCRIPTS_DIR		:= scripts
 SEND_PATCH		:= $(SCRIPTS_DIR)/sendPatch.py
+
 send: all
 	$(PYTHON) $(SEND_PATCH) $(IP)

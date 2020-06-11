@@ -4,13 +4,13 @@ void (*originalNpadStateHandheldFunc)(nn::hid::NpadHandheldState *state, u32 con
 void GetNpadStateHandheldHook(nn::hid::NpadHandheldState *state, u32 const &controllerID) {
     originalNpadStateHandheldFunc(state, controllerID);
     if(state->Buttons & nn::hid::KEY_A) {
-        skyline::TcpLogger::SendRaw("[runtimePatchMain] A button pressed\n");
+        skyline::TcpLogger::SendRaw("[NpadStateHook] A button pressed\n");
     }
 }
 
 Result (*originalOpenFileFunc)(nn::fs::FileHandle *file, char const* path, s32 mode);
 Result openFileHook(nn::fs::FileHandle *file, char const* path, s32 mode) {
-    skyline::TcpLogger::SendRawFormat("opened file %s\n", path);
+    skyline::TcpLogger::SendRawFormat("[openFileHook] opened file %s\n", path);
     return originalOpenFileFunc(file, path, mode);
 }
 
