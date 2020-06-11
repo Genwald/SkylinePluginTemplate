@@ -1,5 +1,5 @@
-#define MODULE_NAME "Skyline"
-#define MODULE_NAME_LEN 7
+#include <cstring>
+#define MODULE_NAME_LEN strlen(MODULE_NAME)
 
 // rtld working object
 __attribute__((section(".bss"))) char __nx_module_runtime[0xD0];

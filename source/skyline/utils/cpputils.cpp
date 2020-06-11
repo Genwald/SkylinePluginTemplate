@@ -8,7 +8,7 @@ namespace skyline {
     std::string utils::g_RomMountStr = "rom:/";
 
     nn::os::EventType utils::g_RomMountedEvent;
-    
+
     u64 utils::g_MainTextAddr;
     u64 utils::g_MainRodataAddr;
     u64 utils::g_MainDataAddr;
@@ -16,21 +16,6 @@ namespace skyline {
     u64 utils::g_MainHeapAddr;
 
     nn::settings::system::FirmwareVersion utils::g_CachedFwVer;
-
-    void utils::init(){
-        // find .text
-        utils::g_MainTextAddr = memGetMapAddr((u64)nninitStartup); // nninitStartup can be reasonably assumed to be exported by main
-        // find .rodata
-        utils::g_MainRodataAddr = memNextMap(utils::g_MainTextAddr);
-        // find .data
-        utils::g_MainDataAddr = memNextMap(utils::g_MainRodataAddr);
-        // find .bss
-        utils::g_MainBssAddr = memNextMap(utils::g_MainDataAddr);
-        // find heap
-        utils::g_MainHeapAddr = memNextMapOfType(utils::g_MainBssAddr, MemType_Heap);
-        // Causes a crash on some games, might want to do this differently. (Calling SVCs implemented later?)
-        //nn::settings::system::GetFirmwareVersion(&g_CachedFwVer);
-    }
 
     bool endsWith(std::string const& str1, std::string const& str2){
         return str2.size() <= str1.size()
@@ -76,7 +61,7 @@ namespace skyline {
 
             callback(entry, std::make_shared<std::string>(fullPath));
         }
-        
+
         exit:
         delete[] entryBuffer;
         return r;
@@ -136,11 +121,11 @@ namespace skyline {
         nn::fs::DirectoryEntryType entryType;
         Result rc = nn::fs::GetEntryType(&entryType, str.c_str());
 
-        if(rc == 0x202) { // Path does not exist 
+        if(rc == 0x202) { // Path does not exist
             R_TRY(nn::fs::CreateFile(str.c_str(), offset + length));
         } else if(R_FAILED(rc))
             return rc;
-            
+
         if(entryType == nn::fs::DirectoryEntryType_Directory)
             return -1;
 
@@ -179,30 +164,12 @@ namespace skyline {
             return 0;
         }
 
-        return walkDirectory(path, 
+        return walkDirectory(path,
         [out, entryType](nn::fs::DirectoryEntry const& entry, std::shared_ptr<std::string>) {
-            if(entry.type == entryType) 
+            if(entry.type == entryType)
                 (*out)++;
-        }, 
+        },
         false); // not recursive
     }
 
-    void* utils::getRegionAddress(skyline::utils::region region)
-    {
-        switch(region)
-        {
-            case region::Text:
-                return g_MainTextAddr;
-            case region::Rodata:
-                return g_MainRodataAddr;
-            case region::Data:
-                return g_MainDataAddr;
-            case region::Bss:
-                return g_MainBssAddr;
-            case region::Heap:
-                return g_MainHeapAddr;
-            default:
-                return NULL;
-        }
-    }
 };

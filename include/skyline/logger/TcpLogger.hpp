@@ -1,27 +1,14 @@
 
 #pragma once
 
-#include "operator.h"
-#include "alloc.h"
-#include "mem.h"
+#include <cstdarg>
+#include <cstring>
+#include <stdio.h>
 
-#include "nn/socket.h"
-#include "nn/time.h"
+extern "C" void skyline_tcp_send_raw(char* data, size_t size);
 
-#include "skyline/inlinehook/And64InlineHook.hpp"
-
-#include "skyline/logger/Logger.hpp"
-
-#include <arpa/inet.h>
-
-namespace skyline::logger {
-    class TcpLogger : public Logger
-    {
-        public:
-        virtual void Initialize();
-        virtual void SendRaw(void*, size_t);
-        virtual std::string FriendlyName() {
-            return "TcpLogger";
-        }
-    };
+namespace skyline::TcpLogger {
+    void SendRaw(const void*, size_t);
+    void SendRaw(const char*);
+    void SendRawFormat(const char*, ...);
 };

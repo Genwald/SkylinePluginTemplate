@@ -16,7 +16,7 @@ namespace nn
 extern "C" {
 #endif
 
-int main(int argc, char **argv);
+//int main(int argc, char **argv);
 void nninitStartup();
 
 void _init();

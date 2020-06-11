@@ -15,7 +15,7 @@ namespace nn
     namespace fs
     {
         typedef u64 UserId;
-        
+
         struct DirectoryEntry {
             char name[0x300+1];
             char _x302[3];
@@ -44,7 +44,7 @@ namespace nn
             DirectoryEntryType_File
         };
 
-        enum OpenMode 
+        enum OpenMode
         {
             OpenMode_Read = BIT(0),
             OpenMode_Write = BIT(1),
@@ -59,7 +59,7 @@ namespace nn
             OpenDirectoryMode_All = OpenDirectoryMode_Directory | OpenDirectoryMode_File
         };
 
-        enum WriteOptionFlag 
+        enum WriteOptionFlag
         {
             WriteOptionFlag_Flush = BIT(0)
         };
@@ -92,7 +92,7 @@ namespace nn
         // FILE
         Result GetEntryType(nn::fs::DirectoryEntryType* type, char const* path);
         Result CreateFile(char const* filepath, s64 size);
-        Result OpenFile(nn::fs::FileHandle *, char const* path, s32);
+        Result OpenFile(nn::fs::FileHandle *, char const* path, s32 mode);
         Result SetFileSize(FileHandle fileHandle, s64 filesize);
         void CloseFile(FileHandle fileHandle);
         Result FlushFile(FileHandle fileHandle);

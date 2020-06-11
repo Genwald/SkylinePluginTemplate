@@ -16,12 +16,11 @@
 #include "nn/ro.h"
 #include "nn/crypto.h"
 #include "nn/prepo.h"
+#include "nn/hid.hpp"
 #include "nvn/pfnc.h"
 
 #include "skyline/inlinehook/And64InlineHook.hpp"
 #include "skyline/logger/TcpLogger.hpp"
-#include "skyline/plugin/PluginManager.hpp"
-#include "skyline/utils/SafeQueue.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,4 +35,4 @@ extern "C" {
 
 extern nn::os::EventType romMountedEvent;
 
-extern "C" void skylineMain();
+extern "C" int main();
