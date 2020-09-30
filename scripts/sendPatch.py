@@ -41,6 +41,7 @@ curDir = os.curdir
 ftp = FTP()
 print(f'Connecting to {consoleIP}... ', end='')
 ftp.connect(consoleIP, consolePort)
+ftp.login()
 print('Connected!')
 
 ensuredirectory(ftp, '', 'atmosphere')
