@@ -169,4 +169,4 @@ SCRIPTS_DIR		:= scripts
 SEND_PATCH		:= $(SCRIPTS_DIR)/sendPatch.py
 
 send: all
-	$(PYTHON) $(SEND_PATCH) $(IP)
+	$(PYTHON) $(SEND_PATCH) $(IP) $(TITLE_ID)

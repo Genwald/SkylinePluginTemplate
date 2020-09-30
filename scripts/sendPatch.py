@@ -30,6 +30,10 @@ if '.' not in consoleIP:
     print(sys.argv[0], "ERROR: Please specify with `IP=[Your console's IP]`")
     sys.exit(-1)
 
+title_id = "01006A800016E000"
+if len(sys.argv) > 2:
+    title_id = sys.argv[2]
+
 consolePort = 5000
 
 curDir = os.curdir
@@ -41,14 +45,14 @@ print('Connected!')
 
 ensuredirectory(ftp, '', 'atmosphere')
 ensuredirectory(ftp, '/atmosphere', 'contents')
-ensuredirectory(ftp, '/atmosphere/contents', "01006A800016E000")
-ensuredirectory(ftp, f'/atmosphere/contents/01006A800016E000', 'romfs')
-ensuredirectory(ftp, f'/atmosphere/contents/01006A800016E000/romfs', 'skyline')
-ensuredirectory(ftp, f'/atmosphere/contents/01006A800016E000/romfs/skyline', 'plugins')
+ensuredirectory(ftp, '/atmosphere/contents', title_id)
+ensuredirectory(ftp, f'/atmosphere/contents/{title_id}', 'romfs')
+ensuredirectory(ftp, f'/atmosphere/contents/{title_id}/romfs', 'skyline')
+ensuredirectory(ftp, f'/atmosphere/contents/{title_id}/romfs/skyline', 'plugins')
 
 binaryPath = f'{os.path.basename(os.getcwd())}.nro'
 print(binaryPath)
 if os.path.isfile(binaryPath):
-    sdPath = f'/atmosphere/contents/01006A800016E000/romfs/skyline/plugins/{binaryPath}'
+    sdPath = f'/atmosphere/contents/{title_id}/romfs/skyline/plugins/{binaryPath}'
     print(f'Sending {sdPath}')
     ftp.storbinary(f'STOR {sdPath}', open(binaryPath, 'rb'))
